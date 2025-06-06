@@ -11,6 +11,10 @@ export function useToDos() {
         setToDos([... toDos, toDo]);
     }
 
+    function clearToDo() {
+        setToDos([]);
+    }
+
     useEffect(() => {
         if (toDos.length == 0) return;
         console.log(toDos)
@@ -18,7 +22,7 @@ export function useToDos() {
 
     return {
         toDos,
-        addToDo
+        addToDo, clearToDo
     }
 
 
