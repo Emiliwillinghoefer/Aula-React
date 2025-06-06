@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import  type {ToDo} from "../Models/toDo"
+import  type {ToDo} from "../Models/ToDo.ts"
 import {v4 as uuid} from "uuid"
 
 export function useToDos() {
@@ -11,8 +11,22 @@ export function useToDos() {
         setToDos([... toDos, toDo]);
     }
 
-    function clearToDo() {
+    function clearAllToDos() {
         setToDos([]);
+    }
+
+    function clearToDo(id:string) {
+        const index = toDos.findIndex(value => value.id === id);
+        const newToDos = toDos.slice();
+        newToDos.splice(index, 1);
+        setToDos(newToDos);
+    }
+
+    function updateToDo(id:string, check:boolean) {
+        const index = toDos.findIndex(value => value.id === id);
+        const newToDos = toDos.slice(); //Faz copia do objeto
+        newToDos[index].checked = check;
+        setToDos(newToDos);
     }
 
     useEffect(() => {
@@ -22,8 +36,13 @@ export function useToDos() {
 
     return {
         toDos,
-        addToDo, clearToDo
+        addToDo, clearAllToDos, clearToDo,
+        updateToDo
     }
+
+    //ToDO Estilizar
+    //ToDO botao pra limpar o input
+    //ToDO Validacao input obrigatorio
 
 
 }

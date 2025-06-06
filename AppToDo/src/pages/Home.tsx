@@ -1,12 +1,13 @@
 import {useState} from "react";
 import {useToDos} from "../store/useToDos.ts";
+import {ListItem} from "../Components/ListItem.tsx";
 
 export function Home() {
     const [newText, setNewText] = useState("");
-    const {toDos, addToDo, clearToDo} = useToDos();
+    const {toDos, addToDo, clearAllToDos, clearToDo, updateToDo} = useToDos();
 
     return (
-
+        <>
         <form onSubmit={
             event => {
                 event.preventDefault()
@@ -18,7 +19,7 @@ export function Home() {
             }
         }
               onReset={() => {
-                  clearToDo();
+                  clearAllToDos();
               }}
         >
             <input value={newText} onChange={
@@ -31,5 +32,18 @@ export function Home() {
             <button type={"reset"}>Limpar ToDos</button>
         </form>
 
+        <div>
+            {
+                toDos.map(value  => {
+                    return <ListItem {...value}
+                                     key={value.id}
+                                     onApagarClick={() => clearToDo(value.id)}
+                                     onCheckBoxClick={(check)=> updateToDo(value.id, check)}
+                    />
+                })
+            }
+
+        </div>
+        </>
     )
 }
