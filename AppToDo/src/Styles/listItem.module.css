@@ -1,0 +1,13 @@
+.listItem {
+    margin-top: 20px;
+    padding-left: 10px;
+    display: flex;
+    border: 1px solid white;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.textoDecorado {
+    text-decoration: line-through;
+}

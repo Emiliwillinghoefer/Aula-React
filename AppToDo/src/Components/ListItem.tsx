@@ -1,4 +1,6 @@
 import type {ToDo} from "../Models/ToDo.ts";
+import {Trash} from "phosphor-react";
+import style from "../Styles/listItem.module.css";
 
 interface ListItemProps extends ToDo {
     onApagarClick: () => void;
@@ -7,14 +9,16 @@ interface ListItemProps extends ToDo {
 
 export function ListItem(props: ListItemProps) {
     return (
-        <div>
+        <div className={style.listItem}>
             <input onChange={
                 event => {
                     props.onCheckBoxClick(event.target.checked)
                 }
-            } type={"checkbox"}/>
+            } type={"checkbox"} className={ props.checked ? style.textoDecorado : "" }/>
             <p>{props.text}</p>
-            <button onClick={props.onApagarClick}>Apagar</button>
+            <button onClick={props.onApagarClick}>
+                <Trash size={24}/>
+            </button>
         </div>
     )
 }
