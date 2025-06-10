@@ -40,9 +40,7 @@ export function useToDos() {
         updateToDo
     }
 
-    //ToDO Estilizar
-    //ToDO botao pra limpar o input
-    //ToDO Validacao input obrigatorio
-
+    //ToDO Validacao input obrigatorio em JSX tendo no min 10caracteres
+    //ToDo No input usar o useRef.
 
 }

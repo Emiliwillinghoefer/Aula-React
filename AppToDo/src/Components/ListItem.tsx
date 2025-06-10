@@ -14,8 +14,8 @@ export function ListItem(props: ListItemProps) {
                 event => {
                     props.onCheckBoxClick(event.target.checked)
                 }
-            } type={"checkbox"} className={ props.checked ? style.textoDecorado : "" }/>
-            <p>{props.text}</p>
+            } type={"checkbox"} />
+            <p className={ props.checked ? style.textoDecorado : "" }>{props.text}</p>
             <button onClick={props.onApagarClick}>
                 <Trash size={24}/>
             </button>
