@@ -1,8 +1,8 @@
 import {useRef, useState} from "react";
 import {useToDos} from "../store/useToDos.ts";
-import {ListItem} from "../Components/ListItem.tsx";
-import {Trash} from "phosphor-react";
 import {DeleteDialog} from "../Components/DeleteDialog.tsx";
+import {AddNewToDo} from "../Components/AddNewToDo.tsx";
+import {ListAllItems} from "../Components/ListAllItems.tsx";
 
 export function Home() {
     const {toDos, addToDo, clearAllToDos, clearToDo, updateToDo, validateInput} = useToDos();
@@ -44,46 +44,30 @@ export function Home() {
         <form onSubmit={handleSubmit}
               onReset={clearAllToDos}
         >
-            <div className="relative">
-                <input ref={textInput}
-                    className={`bg-gray-400 w-full px-2 py-1 rounded 
-                        ${inputInvalido ? 'border border-red-500' : ''}`}
+            <AddNewToDo
+                ref={textInput}
+                inputInvalido={inputInvalido}
+                setInputInvalido={setInputInvalido}
+                clearNewText={ clearNewText }
+            />
 
-                    onChange={() => setInputInvalido("")}
-                />
-                <button className="absolute right-1 top-1"
-                    type="button"
-                    onClick={clearNewText}
-                ><Trash/></button>
-
-                {inputInvalido && (
-                    <p className="text-red-500 text-sm mt-1">{inputInvalido}</p>
-                )}
-            </div>
             <button className={"button"} type={"submit"}> Add ToDo</button>
             <button className={"button"} type={"reset"}>Limpar ToDos</button>
         </form>
 
-        <div>
-            {
-                toDos.map(value  => {
-                    return <ListItem {...value}
-                                     key={value.id}
-                                     onApagarClick={() => handleDeletePress(value.id)}
-                                     onCheckBoxClick={(check)=> updateToDo(value.id, check)}
-                    />
-                })
-            }
-
-        </div>
-            <DeleteDialog
-                ref={dialogRef}
-                simClick={() => {
-                    clearToDo(deleteId)
-                    dialogRef.current?.close()
-                }}
-                naoClick={() => dialogRef.current?.close()}
-            />
+        <ListAllItems
+            listToDos={toDos}
+            deleteItem={handleDeletePress}
+            updateToDo={updateToDo}
+        />
+        <DeleteDialog
+            ref={dialogRef}
+            simClick={() => {
+                clearToDo(deleteId)
+                dialogRef.current?.close()
+            }}
+            naoClick={() => dialogRef.current?.close()}
+        />
         </>
     )
 }
