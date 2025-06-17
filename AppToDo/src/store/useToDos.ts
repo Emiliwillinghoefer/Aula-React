@@ -15,6 +15,15 @@ export function useToDos() {
         setToDos([]);
     }
 
+    function validateInput(text:string) {
+        console.log(text.length);
+        if (text.length < 10) {
+            return false;
+        }
+        return true;
+
+    }
+
     function clearToDo(id:string) {
         const index = toDos.findIndex(value => value.id === id);
         const newToDos = toDos.slice();
@@ -37,10 +46,9 @@ export function useToDos() {
     return {
         toDos,
         addToDo, clearAllToDos, clearToDo,
-        updateToDo
+        updateToDo, validateInput
     }
 
-    //ToDO Validacao input obrigatorio em JSX tendo no min 10caracteres
     //ToDo No input usar o useRef.
 
 }

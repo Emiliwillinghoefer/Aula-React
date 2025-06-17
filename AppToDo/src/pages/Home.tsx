@@ -5,10 +5,14 @@ import {Trash} from "phosphor-react";
 
 export function Home() {
     const [newText, setNewText] = useState("");
-    const {toDos, addToDo, clearAllToDos, clearToDo, updateToDo} = useToDos();
+    const {toDos, addToDo, clearAllToDos, clearToDo, updateToDo, validateInput} = useToDos();
+
+    const textInput = useRef<HTMLInputElement>(null);
 
     const [deleteId, setDeleteId] = useState("");
     const dialogRef = useRef<HTMLDialogElement>(null);
+
+    const [inputInvalido, setInputInvalido] = useState("");
 
     function handleDeletePress(id: string) {
         setDeleteId(id);
@@ -16,16 +20,19 @@ export function Home() {
     }
 
     function clearNewText() {
-        setNewText("");
+        textInput.current?.defaultValue
     }
 
     const handleSubmit = ( event: React.FormEvent) => {
         event.preventDefault()
-        if (newText == "") {
+
+        if (!validateInput(newText)) {
+            setInputInvalido("Digite pelo menos 10 caracteres.");
             return;
         }
         addToDo(newText)
         setNewText("");
+        setInputInvalido("");
     };
 
     return (
@@ -33,16 +40,25 @@ export function Home() {
         <form onSubmit={handleSubmit}
               onReset={clearAllToDos}
         >
-            <div className={"relative"}>
-                <input className={"bg-gray-400 w-full"} value={newText} onChange={
-                    event => {
-                        setNewText(event.target.value)
-                    }
-                }/>
-                <button className={"absolute  right-1 top-1"}
-                        type={"button"}
-                        onClick={clearNewText}
+            <div className="relative">
+                <input ref={textInput}
+                    className={`bg-gray-400 w-full px-2 py-1 rounded 
+                        ${inputInvalido ? 'border border-red-500' : ''}`}
+
+                    onChange={
+                        event => {
+                            setNewText(event.target.value);
+                        setInputInvalido("");
+                    }}
+                />
+                <button className="absolute right-1 top-1"
+                    type="button"
+                    onClick={clearNewText}
                 ><Trash/></button>
+
+                {inputInvalido && (
+                    <p className="text-red-500 text-sm mt-1">{inputInvalido}</p>
+                )}
             </div>
             <button className={"button"} type={"submit"}> Add ToDo</button>
             <button className={"button"} type={"reset"}>Limpar ToDos</button>
