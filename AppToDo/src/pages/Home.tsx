@@ -4,7 +4,6 @@ import {ListItem} from "../Components/ListItem.tsx";
 import {Trash} from "phosphor-react";
 
 export function Home() {
-    const [newText, setNewText] = useState("");
     const {toDos, addToDo, clearAllToDos, clearToDo, updateToDo, validateInput} = useToDos();
 
     const textInput = useRef<HTMLInputElement>(null);
@@ -20,18 +19,22 @@ export function Home() {
     }
 
     function clearNewText() {
-        textInput.current?.defaultValue
+        if (textInput.current != null) {
+            textInput.current.value = "";
+        }
+
     }
 
     const handleSubmit = ( event: React.FormEvent) => {
         event.preventDefault()
 
+        const newText = textInput.current?.value ?? "";
         if (!validateInput(newText)) {
             setInputInvalido("Digite pelo menos 10 caracteres.");
             return;
         }
         addToDo(newText)
-        setNewText("");
+        clearNewText();
         setInputInvalido("");
     };
 
@@ -45,11 +48,7 @@ export function Home() {
                     className={`bg-gray-400 w-full px-2 py-1 rounded 
                         ${inputInvalido ? 'border border-red-500' : ''}`}
 
-                    onChange={
-                        event => {
-                            setNewText(event.target.value);
-                        setInputInvalido("");
-                    }}
+                    onChange={() => setInputInvalido("")}
                 />
                 <button className="absolute right-1 top-1"
                     type="button"

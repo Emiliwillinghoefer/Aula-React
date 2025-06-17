@@ -16,7 +16,6 @@ export function useToDos() {
     }
 
     function validateInput(text:string) {
-        console.log(text.length);
         if (text.length < 10) {
             return false;
         }
@@ -40,7 +39,6 @@ export function useToDos() {
 
     useEffect(() => {
         if (toDos.length == 0) return;
-        console.log(toDos)
     }, [toDos]);
 
     return {
