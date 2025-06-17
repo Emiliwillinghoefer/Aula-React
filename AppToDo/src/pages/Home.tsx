@@ -2,6 +2,7 @@ import {useRef, useState} from "react";
 import {useToDos} from "../store/useToDos.ts";
 import {ListItem} from "../Components/ListItem.tsx";
 import {Trash} from "phosphor-react";
+import {DeleteDialog} from "../Components/DeleteDialog.tsx";
 
 export function Home() {
     const {toDos, addToDo, clearAllToDos, clearToDo, updateToDo, validateInput} = useToDos();
@@ -25,7 +26,7 @@ export function Home() {
 
     }
 
-    const handleSubmit = ( event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
         const newText = textInput.current?.value ?? "";
@@ -75,15 +76,14 @@ export function Home() {
             }
 
         </div>
-            <dialog ref={dialogRef}>
-                <button className={"button"} onClick={() => {
+            <DeleteDialog
+                ref={dialogRef}
+                simClick={() => {
                     clearToDo(deleteId)
                     dialogRef.current?.close()
-                }}>Sim</button>
-                <button className={"button"}
-                        onClick={() => dialogRef.current?.close()}
-                >Não</button>
-            </dialog>
+                }}
+                naoClick={() => dialogRef.current?.close()}
+            />
         </>
     )
 }

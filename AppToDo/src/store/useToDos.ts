@@ -47,6 +47,6 @@ export function useToDos() {
         updateToDo, validateInput
     }
 
-    //ToDo No input usar o useRef.
+    //ToDo criar componentes pra tudo;
 
 }
