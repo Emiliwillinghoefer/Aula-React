@@ -5,7 +5,7 @@ import {NewToDoForm} from "../Components/NewToDoForm.tsx";
 import {ListAllItems} from "../Components/ListAllItems.tsx";
 
 export function Home() {
-    const {toDos, addToDo, clearAllToDos, clearToDo, updateToDo, validateInput} = useToDos();
+    const {toDos, clearToDo, updateToDo} = useToDos();
 
     const [deleteId, setDeleteId] = useState("");
     const dialogRef = useRef<HTMLDialogElement>(null);
@@ -18,11 +18,7 @@ export function Home() {
 
     return (
         <>
-            <NewToDoForm
-                addToDo={addToDo}
-                clearAllToDos={clearAllToDos}
-                validateInput={validateInput}
-            />
+            <NewToDoForm/>
 
         <ListAllItems
             listToDos={toDos}

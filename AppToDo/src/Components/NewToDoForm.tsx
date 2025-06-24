@@ -1,15 +1,13 @@
 import {Trash} from "phosphor-react";
 import {useRef, useState} from "react";
 import {Input} from "./Input.tsx";
+import {useToDos} from "../store/useToDos.tsx";
 
-interface AddNewToDoProps {
-    addToDo: (id: string) => void;
-    clearAllToDos: () => void;
-    validateInput: (value: string) => boolean;
 
-}
 
-export function NewToDoForm(props: AddNewToDoProps) {
+export function NewToDoForm() {
+    const {addToDo, clearAllToDos, validateInput} = useToDos();
+    
     const [inputInvalido, setInputInvalido] = useState("");
     const textInput = useRef<HTMLInputElement>(null);
 
@@ -24,18 +22,18 @@ export function NewToDoForm(props: AddNewToDoProps) {
         event.preventDefault()
 
         const newText = textInput.current?.value ?? "";
-        if (!props.validateInput(newText)) {
+        if (!validateInput(newText)) {
             setInputInvalido("Digite pelo menos 10 caracteres.");
             return;
         }
-        props.addToDo(newText)
+        addToDo(newText)
         clearNewText();
         setInputInvalido("");
     };
 
     return (
         <form onSubmit={handleSubmit}
-              onReset={props.clearAllToDos}
+              onReset={clearAllToDos}
         >
             <div className="relative">
                 <Input ref={textInput} inputInvalido={inputInvalido} onChange={() => setInputInvalido("")}/>
