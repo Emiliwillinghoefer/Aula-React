@@ -1,13 +1,15 @@
-
-import { Route, Switch } from "wouter";
+import {Route, Switch} from "wouter";
 import './App.css'
 import {Home} from "./pages/Home.tsx";
+import {ToDosProvider} from "./store/useToDos.tsx";
 
 function App() {
-    return  (
-        <Switch>
-            <Route path={"/"} component={Home}></Route>
-        </Switch>
+    return (
+        <ToDosProvider>
+            <Switch>
+                <Route path={"/"} component={Home}></Route>
+            </Switch>
+        </ToDosProvider>
     )
 }
 
