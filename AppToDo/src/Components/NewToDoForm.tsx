@@ -2,12 +2,14 @@ import {Trash} from "phosphor-react";
 import {useRef, useState} from "react";
 import {Input} from "./Input.tsx";
 import {useToDos} from "../store/useToDos.tsx";
+import {clearToDos} from "../store/clearToDos.tsx";
 
 
 
 export function NewToDoForm() {
-    const {addToDo, clearAllToDos, validateInput} = useToDos();
-    
+    const {addToDo, validateInput} = useToDos();
+    const{clearAllToDos} = clearToDos();
+
     const [inputInvalido, setInputInvalido] = useState("");
     const textInput = useRef<HTMLInputElement>(null);
 

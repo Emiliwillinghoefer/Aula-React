@@ -3,9 +3,11 @@ import {useToDos} from "../store/useToDos.tsx";
 import {DeleteDialog} from "../Components/DeleteDialog.tsx";
 import {NewToDoForm} from "../Components/NewToDoForm.tsx";
 import {ListAllItems} from "../Components/ListAllItems.tsx";
+import {clearToDos} from "../store/clearToDos.tsx";
 
 export function Home() {
-    const {toDos, clearToDo, updateToDo} = useToDos();
+    const {toDos, updateToDo} = useToDos();
+    const{clearToDo} = clearToDos();
 
     const [deleteId, setDeleteId] = useState("");
     const dialogRef = useRef<HTMLDialogElement>(null);

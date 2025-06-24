@@ -5,9 +5,8 @@ import {v4 as uuid} from "uuid"
 
 interface UseToDos {
     toDos: ToDo[];
+    setToDos: (todos: ToDo[]) => void;
     addToDo: (text: string) => void;
-    clearAllToDos: () => void;
-    clearToDo: (id: string) => void;
     updateToDo: (id: string, check: boolean) => void;
     validateInput: (text: string) => boolean;
 }
@@ -23,9 +22,6 @@ export function ToDosProvider(props: PropsWithChildren) {
         setToDos([...toDos, toDo]);
     }
 
-    function clearAllToDos() {
-        setToDos([]);
-    }
 
     function validateInput(text: string) {
         if (text.length < 10) {
@@ -35,12 +31,6 @@ export function ToDosProvider(props: PropsWithChildren) {
 
     }
 
-    function clearToDo(id: string) {
-        const index = toDos.findIndex(value => value.id === id);
-        const newToDos = toDos.slice();
-        newToDos.splice(index, 1);
-        setToDos(newToDos);
-    }
 
     function updateToDo(id: string, check: boolean) {
         const index = toDos.findIndex(value => value.id === id);
@@ -53,14 +43,15 @@ export function ToDosProvider(props: PropsWithChildren) {
         if (toDos.length == 0) return;
     }, [toDos]);
 
-    return <ToDosContext value = {
+    return <ToDosContext value={
         {
             toDos,
-                addToDo, clearAllToDos, clearToDo,
-                updateToDo, validateInput
+            setToDos,
+            addToDo,
+            updateToDo,
+            validateInput
         }
-    }
-    >{props.children}</ToDosContext>
+    }>{props.children}</ToDosContext>
 
 }
 
