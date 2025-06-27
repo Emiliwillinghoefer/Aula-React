@@ -2,7 +2,7 @@ import {Route, Switch} from "wouter";
 import './App.css'
 import {Home} from "./pages/Home.tsx";
 import {ToDosProvider} from "./store/useToDos.tsx";
-import {ClearToDoProvider} from "./store/clearToDos.tsx";
+import {ClearToDoProvider} from "./store/useClearToDos.tsx";
 
 function App() {
     return (

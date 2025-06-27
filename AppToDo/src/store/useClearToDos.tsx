@@ -1,12 +1,12 @@
 import {createContext, type PropsWithChildren, useContext} from "react";
 import {useToDos} from "./useToDos.tsx";
 
-interface clearToDosProps {
+interface ClearToDosProps {
     clearAllToDos: () => void;
     clearToDo: (id: string) => void;
 }
 
-const ClearToDoContext = createContext<clearToDosProps | undefined>(undefined);
+const ClearToDoContext = createContext<ClearToDosProps | undefined>(undefined);
 
 export function ClearToDoProvider(props: PropsWithChildren) {
 
@@ -30,7 +30,7 @@ export function ClearToDoProvider(props: PropsWithChildren) {
     }>{props.children}</ClearToDoContext>
 }
 
-export function clearToDos() {
+export function useClearToDos() {
     const contexto = useContext(ClearToDoContext);
     if (!contexto) {
         throw new Error("Nenhum provider de ClearTodo");
