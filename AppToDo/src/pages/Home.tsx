@@ -2,7 +2,7 @@ import {useRef, useState} from "react";
 import {useToDos} from "../store/useToDos.tsx";
 import {DeleteDialog} from "../Components/DeleteDialog.tsx";
 import {NewToDoForm} from "../Components/NewToDoForm.tsx";
-import {ListAllItems} from "../Components/ListAllItems.tsx";
+import {ListAllItems} from "../Components/ListItems";
 import {useClearToDos} from "../store/useClearToDos.tsx";
 
 export function Home() {

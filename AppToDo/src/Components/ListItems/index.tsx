@@ -1,5 +1,5 @@
-import {ListItem} from "./ListItem.tsx";
-import type {ToDo} from "../Models/ToDo.ts";
+import {ListItem} from "./LisItem";
+import type {ToDo} from "../../Models/ToDo.ts";
 
 interface ListAllItemsProps {
     listToDos: ToDo[];
