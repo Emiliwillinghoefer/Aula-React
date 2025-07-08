@@ -1,10 +1,10 @@
-import {createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState} from "react";
+import {createContext, type PropsWithChildren, useContext, useEffect, useMemo, useRef, useState} from "react";
 
 interface CronometroAPI{
     iniciar(): void;
     pausar(): void;
     resetar(): void;
-    lap(tempo: number): void;
+    lap(): void;
 }
 
 const CronometroAPI = createContext<CronometroAPI>({} as CronometroAPI);
@@ -18,10 +18,15 @@ export const useCronometroTempo = () => useContext(CronometroTempo);
 export const useCronometroExecutando = () => useContext(CronometroExecutando);
 
 export function CronometroProvider(props: PropsWithChildren) {
+    const tempoRef = useRef(0);
     const [tempo, setTempo] = useState(0);
     const [executando, setExecutando] = useState(false);
 
     const [laps, setLap] = useState<number[]>([]);
+
+    useEffect(() => {
+        tempoRef.current = tempo
+    }, [tempo]);
 
     const api = useMemo(() => {
         function iniciar() {
@@ -34,13 +39,13 @@ export function CronometroProvider(props: PropsWithChildren) {
 
         function resetar() {
             setTempo(0);
+            setLap([]);
             setExecutando(false);
         }
 
-        function lap(time: number) {
+        function lap() {
             setLap((lapsAtuais) => {
-                console.log("Lap", lapsAtuais);
-                return [...lapsAtuais, time];
+                return [...lapsAtuais, tempoRef.current];
             });
         }
 

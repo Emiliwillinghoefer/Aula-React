@@ -6,7 +6,7 @@ import {useLaps} from "../../../store/useCronometro.tsx";
 export function ListAllLaps() {
     const lap = useLaps();
     return (
-        <div>
+        <div  className="w-full ">
             {
                 lap.map(value  => {
                     return <Lap tempo={value} key={value}/>

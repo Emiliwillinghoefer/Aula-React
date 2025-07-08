@@ -1,15 +1,10 @@
+import {getCalculoTempo} from "../Tempo.tsx";
+
 export function Lap(props:{tempo:number}) {
     return (
-        <div className="
-    margin-top: 20px;
-    padding-left: 10px;
-    display: flex;
-    border: 1px solid white;
-    border-radius: 8px;
-    align-items: center;
-    justify-content: space-between;">
+        <div className="w-full flex flex-row justify-between text-white" >
             <p>Lap</p>
-            <p>{props.tempo}</p>
+            <p>{getCalculoTempo(props.tempo)}</p>
         </div>
     )
 }
