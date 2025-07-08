@@ -1,3 +1,11 @@
+import {CronometroProvider} from "../store/useTemporizador.tsx";
+import {TemporizadorContent} from "../Componentes/Temporizador/TemporizadorContent.tsx";
+
 export function Temporizador() {
-  return <div>Temporizador</div>;
+  return (
+          <CronometroProvider>
+          <TemporizadorContent/>
+          </CronometroProvider>
+      )
+
 }

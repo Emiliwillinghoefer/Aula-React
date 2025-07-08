@@ -1,4 +1,4 @@
-import {getCalculoTempo} from "../Tempo.tsx";
+import {getCalculoTempo} from "../../../utils/funcoesUteis.ts";
 
 export function Lap(props:{tempo:number}) {
     return (

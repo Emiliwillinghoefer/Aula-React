@@ -1,4 +1,4 @@
-import {Botao} from "./Botao.tsx";
+import {Botao} from "../Botao.tsx";
 import {Tempo} from "./Tempo.tsx";
 import {Titulo} from "./Titulo.tsx";
 import {useCronometroAPI, useCronometroExecutando} from "../../store/useCronometro.tsx";

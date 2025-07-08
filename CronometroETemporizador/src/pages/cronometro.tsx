@@ -18,7 +18,6 @@ export function Cronometro() {
 
 
 
-//TODO: Gravar tempo (LAP)   -----> https://quick-time-spark.lovable.app/
-//TODO: Separar os arquivos
+//  -----> https://quick-time-spark.lovable.app/
 // Criar a tela de temporizador
 
