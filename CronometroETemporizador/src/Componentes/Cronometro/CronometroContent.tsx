@@ -1,0 +1,53 @@
+import {Botao} from "./Botao.tsx";
+import {Tempo} from "./Tempo.tsx";
+import {Titulo} from "./Titulo.tsx";
+import {useCronometroAPI, useCronometroExecutando, useCronometroTempo} from "../../store/useCronometro.tsx";
+import {ListAllLaps} from "./Lap/ListAllLaps.tsx";
+
+export function CronometroContent() {
+
+    return (
+        <div className="flex flex-col items-center justify-center h-screen bg-black">
+            <div className="bg-[#121215] p-10 w-80  rounded shadow-lg flex flex-col items-center space-y-6">
+                <Titulo titulo={"StopWatch"}/>
+                <Tempo/>
+                <Botoes/>
+
+                <ListAllLaps/>
+            </div>
+        </div>
+    );
+}
+
+
+function Botoes() {
+    const api = useCronometroAPI();
+    const tempo = useCronometroTempo();
+    const executando = useCronometroExecutando();
+    return (
+        <div className="flex justify-center gap-4 mt-4">
+            {executando
+                ? <Botao estilo={"border-0 bg-purple-600 rounded p-2 text-white"}
+                         nome={"Pausar"}
+                         aoClicar={api.pausar}
+                />
+                : <Botao
+                    estilo={"border-0 bg-purple-600 rounded p-2 text-white"}
+                    nome={"Iniciar"}
+                    aoClicar={api.iniciar}
+                />
+            }
+
+            {executando
+                ? <Botao estilo={"border-0 bg-black rounded p-2 text-white"}
+                         nome={"Lap"}
+                         aoClicar={() => api.lap(tempo)}/>
+                : null
+            }
+            <Botao
+                estilo={"border-0 bg-black rounded p-2 text-white"}
+                nome={"Resetar"}
+                aoClicar={api.resetar}/>
+        </div>
+    )
+}
