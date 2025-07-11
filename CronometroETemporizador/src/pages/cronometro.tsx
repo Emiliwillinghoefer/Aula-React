@@ -1,14 +1,17 @@
 import {CronometroContent} from "../Componentes/Cronometro/CronometroContent.tsx";
 import {CronometroProvider} from "../store/useCronometro.tsx";
+import {MainLayout} from "../Componentes/Layout/Main.tsx";
 
 
 
 export function Cronometro() {
     return (
-        <CronometroProvider>
-            <CronometroContent>
-            </CronometroContent>
-        </CronometroProvider>
+        <MainLayout>
+            <CronometroProvider>
+                <CronometroContent>
+                </CronometroContent>
+            </CronometroProvider>
+        </MainLayout>
     )
 }
 
