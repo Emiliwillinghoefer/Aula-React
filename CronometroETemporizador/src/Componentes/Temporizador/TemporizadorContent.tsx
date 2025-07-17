@@ -1,25 +1,16 @@
 import {Tempo} from "./Tempo.tsx";
-import {useTemporizadorAPI} from "../../store/useTemporizador.tsx";
+import {useTemporizadorAPI, useTemporizadorExecutando} from "../../store/useTemporizador.tsx";
 import {Botao} from "../Botao.tsx";
 
 export function TemporizadorContent() {
-	const api = useTemporizadorAPI();
-
+	useTemporizadorAPI();
 	return (
 		<>
 		<div className="flex flex-col items-center justify-center min-h-screen  bg-black">
 			<div className="bg-[#131315] p-10 w-96 rounded shadow-lg flex flex-col items-center space-y-6 border-1 border-amber-50">
 				<Tempo />
 				<div className="flex w-40 flex-row items-center justify-between">
-				<Botao
-					estilo={"border-0 bg-purple-600 rounded p-2 text-white"}
-					nome={"Iniciar"}
-					aoClicar={api.iniciar}
-				/>
-				<Botao
-					estilo={"border-0 bg-black rounded p-2 text-white"}
-					nome={"Resetar"}
-					aoClicar={api.resetar}/>
+				<Botoes />
 				</div>
 			</div>
 			<div className="m-5 bg-[#131315] p-10 w-96 rounded shadow-lg flex flex-col  border-1 border-amber-50">
@@ -42,4 +33,27 @@ function TemposPreDefinidos() {
 	)
 }
 
+function Botoes() {
+	const api = useTemporizadorAPI();
+	const executando = useTemporizadorExecutando();
+	return (
+		<div className="flex justify-center gap-4 mt-4">
+			{executando
+				? <Botao estilo={"border-0 bg-yellow-500 rounded p-2 text-white"}
+						 nome={"Pausar"}
+						 aoClicar={api.pausar}
+				/>
+				: <Botao
+					estilo={"border-0 bg-purple-600 rounded p-2 text-white"}
+					nome={"Iniciar"}
+					aoClicar={api.iniciar}
+				/>
+			}
+			<Botao
+				estilo={"border-0 bg-black rounded p-2 text-white"}
+				nome={"Resetar"}
+				aoClicar={api.resetar}/>
+		</div>
+	)
+}
 

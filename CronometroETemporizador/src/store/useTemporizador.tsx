@@ -9,15 +9,20 @@ interface TemporizadorAPI{
 
 const TemporizadorAPI = createContext<TemporizadorAPI>({} as TemporizadorAPI);
 const TemporizadorTempo = createContext<number>(0);
+const TemporizadorExecutando = createContext<boolean>(false);
+const TemporizadorProgresso = createContext<number>(0);
 
 
 export const useTemporizadorAPI = () => useContext(TemporizadorAPI);
 export const useTemporizadorTempo = () => useContext(TemporizadorTempo);
+export const useTemporizadorExecutando = () => useContext(TemporizadorExecutando);
+export const useTemporizadorProgresso = () => useContext(TemporizadorProgresso);
 
 export function CronometroProvider(props: PropsWithChildren) {
 
     const [tempo, setTempo] = useState(0);
     const [executando, setExecutando] = useState(false);
+    const [progresso, setProgresso] = useState(0);
 
     const api = useMemo(() => {
         function iniciar() {
@@ -56,7 +61,9 @@ export function CronometroProvider(props: PropsWithChildren) {
     return (
         <TemporizadorAPI value={api}>
             <TemporizadorTempo value={tempo}>
-                {props.children}
+                <TemporizadorExecutando value={executando}>
+                    {props.children}
+                </TemporizadorExecutando>
             </TemporizadorTempo>
         </TemporizadorAPI>
     )
