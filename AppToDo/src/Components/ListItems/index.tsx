@@ -1,5 +1,7 @@
 import {ListItem} from "./LisItem";
 import type {ToDo} from "../../Models/ToDo.ts";
+import {SearchInput} from "./SearchInput.tsx";
+import {useState} from "react";
 
 interface ListAllItemsProps {
     listToDos: ToDo[];
@@ -8,10 +10,21 @@ interface ListAllItemsProps {
 }
 
 export function ListAllItems(props:ListAllItemsProps) {
+
+    const [busca, setBusca] = useState("");
+
+    const filtro = props.listToDos.filter((v) => {
+        return v.text.toLowerCase().includes(busca)
+    })
+
     return (
         <div>
+            <SearchInput
+                valor={busca}
+                setValor={setBusca}
+            />
             {
-                props.listToDos.map(value  => {
+                filtro.map(value  => {
                     return <ListItem {...value}
                                      key={value.id}
                                      onApagarClick={() => props.deleteItem(value.id)}
