@@ -23,6 +23,16 @@ export function CronometroProvider(props: PropsWithChildren) {
     const [tempo, setTempo] = useState(0);
     const [executando, setExecutando] = useState(false);
     const [progresso, setProgresso] = useState(0);
+    const [tempoTotal, setTempoTotal] = useState(0);
+
+    useEffect(() => {
+        if (tempoTotal > 0) {
+            const p = 1 - tempo / tempoTotal;
+            setProgresso(p * 100);
+        } else {
+            setProgresso(0);
+        }
+    }, [tempo, tempoTotal]);
 
     const api = useMemo(() => {
         function iniciar() {
@@ -35,11 +45,13 @@ export function CronometroProvider(props: PropsWithChildren) {
 
         function resetar() {
             setTempo(0);
+            setTempoTotal(0);
             setExecutando(false);
         }
 
         function definirTempo(tpm: number) {
             setTempo(tpm);
+            setTempoTotal(tpm)
             setExecutando(false);
         }
 
@@ -49,8 +61,6 @@ export function CronometroProvider(props: PropsWithChildren) {
 
     useEffect(() => {
         if (tempo > 0 && executando) {
-
-
             const idIntervalo = setInterval(
                 () =>
                     setTempo(valor => valor - 1), 1000);
@@ -62,7 +72,9 @@ export function CronometroProvider(props: PropsWithChildren) {
         <TemporizadorAPI value={api}>
             <TemporizadorTempo value={tempo}>
                 <TemporizadorExecutando value={executando}>
-                    {props.children}
+                    <TemporizadorProgresso value={progresso}>
+                        {props.children}
+                    </TemporizadorProgresso>
                 </TemporizadorExecutando>
             </TemporizadorTempo>
         </TemporizadorAPI>
