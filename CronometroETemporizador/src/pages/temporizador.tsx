@@ -13,3 +13,5 @@ export function Temporizador() {
       )
 
 }
+
+//TODO continuar o SetTimer para setar o valor pelo input
