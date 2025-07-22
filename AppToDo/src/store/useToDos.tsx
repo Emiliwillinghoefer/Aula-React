@@ -1,27 +1,56 @@
-import {createContext, type PropsWithChildren, useContext, useEffect, useState} from "react";
+import {createContext, type PropsWithChildren, useContext, useEffect, useReducer} from "react";
 import type {ToDo} from "../Models/ToDo.ts"
 import {v4 as uuid} from "uuid"
 
 
 interface UseToDos {
     toDos: ToDo[];
-    setToDos: (todos: ToDo[]) => void;
     addToDo: (text: string) => void;
     updateToDo: (id: string, check: boolean) => void;
     validateInput: (text: string) => boolean;
 }
 
+interface Acao<T, C> {
+    tipo: T;
+    conteudo: C;
+}
+
+type ToDoAcao =
+    | Acao<"Add", string>
+    | Acao<"Set", ToDo[]>
+    | Acao<"Update", {id: string, check: boolean}>;
+
 const ToDosContext = createContext<UseToDos | undefined>(undefined);
+
+function toDosReducer(state: ToDo[], action: ToDoAcao) : ToDo[] {
+    switch (action.tipo) {
+        case "Add":
+            const toDo: ToDo = {
+                id: uuid(),
+                text: action.conteudo,
+                checked: false,
+            };
+            return [...state, toDo];
+        case "Set":
+            return action.conteudo;
+        case "Update":
+            const {id, check} = action.conteudo;
+            const index = state.findIndex(value => value.id === id);
+            const newToDos = state.slice();
+            newToDos[index].checked = check;
+            return newToDos;
+        default:
+            throw new Error("Ação desconhecida");
+    }
+}
 
 export function ToDosProvider(props: PropsWithChildren) {
 
-    const [toDos, setToDos] = useState<ToDo[]>([]);
+    const [toDos, dispatch] = useReducer(toDosReducer, []);
 
-    async function addToDo(text: string) {
-        const toDo: ToDo = {id: uuid(), text, checked: false};
-        setToDos([...toDos, toDo]);
+    function addToDo(text: string) {
+        dispatch({tipo: "Add", conteudo: text})
     }
-
 
     function validateInput(text: string) {
         if (text.length < 10) {
@@ -33,10 +62,7 @@ export function ToDosProvider(props: PropsWithChildren) {
 
 
     function updateToDo(id: string, check: boolean) {
-        const index = toDos.findIndex(value => value.id === id);
-        const newToDos = toDos.slice(); //Faz copia do objeto
-        newToDos[index].checked = check;
-        setToDos(newToDos);
+        dispatch({tipo: "Update", conteudo: {id, check}});
     }
 
     useEffect(() => {
@@ -46,7 +72,6 @@ export function ToDosProvider(props: PropsWithChildren) {
     return <ToDosContext value={
         {
             toDos,
-            setToDos,
             addToDo,
             updateToDo,
             validateInput
