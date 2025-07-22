@@ -19,22 +19,24 @@ export function Home() {
     }
 
     return (
-        <>
+
+            <div className="w-[60%] mx-auto items-center">
+            <h1 className="text-[#efd1b9] text-6xl">App ToDo</h1>
             <NewToDoForm/>
 
-        <ListAllItems
-            listToDos={toDos}
-            deleteItem={handleDeletePress}
-            updateToDo={updateToDo}
-        />
-        <DeleteDialog
-            ref={dialogRef}
-            simClick={() => {
-                clearToDo(deleteId)
-                dialogRef.current?.close()
-            }}
-            naoClick={() => dialogRef.current?.close()}
-        />
-        </>
+            <ListAllItems
+                listToDos={toDos}
+                deleteItem={handleDeletePress}
+                updateToDo={updateToDo}
+            />
+            <DeleteDialog
+                ref={dialogRef}
+                simClick={() => {
+                    clearToDo(deleteId)
+                    dialogRef.current?.close()
+                }}
+                naoClick={() => dialogRef.current?.close()}
+            />
+        </div>
     )
 }

@@ -22,10 +22,10 @@ export function SearchInput(props: InputProps) {
 
 	return (
 
-		<div className="m-4">
+		<div className="mt-5 ">
 			<input
 				placeholder={"Digite sua busca"}
-				className={`bg-gray-400 w-full px-2 py-1 rounded`}
+				className={`bg-[#D8D9C8] w-full px-2 py-2 rounded-xl p-4`}
 				value={valorLocal}
 				onChange={
 					(e) => setValorLocal(e.target.value)}
