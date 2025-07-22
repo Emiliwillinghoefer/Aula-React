@@ -39,4 +39,12 @@ export function Home() {
             />
         </div>
     )
+
+    //Todo
+    // juntar cleartodos use todos
+    // continuar estilizando
+    // local storage
+    // parametros pela Url, botões de filtragem por estado
+    // bucar todos local com o .then
+    //dialog
 }

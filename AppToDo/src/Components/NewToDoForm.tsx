@@ -40,10 +40,10 @@ export function NewToDoForm() {
         >
             <div className="relative  flex-grow">
                 <Input ref={textInput} inputInvalido={inputInvalido} onChange={() => setInputInvalido("")}/>
-                <button className="absolute right-1 top-1 "
+                <button className="absolute right-4 top-1 bottom-1 "
                         type="button"
                         onClick={clearNewText}
-                ><Trash/></button>
+                ><Trash size={20}/></button>
 
                 {inputInvalido && (
                     <p className="text-red-500 text-sm mt-1">{inputInvalido}</p>
