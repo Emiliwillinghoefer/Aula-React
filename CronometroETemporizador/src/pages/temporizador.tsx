@@ -7,6 +7,7 @@ export function Temporizador() {
       <MainLayout>
           <CronometroProvider>
           <TemporizadorContent/>
+
           </CronometroProvider>
       </MainLayout>
       )

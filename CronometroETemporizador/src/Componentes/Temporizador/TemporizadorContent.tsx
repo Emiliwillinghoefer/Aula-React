@@ -1,19 +1,21 @@
 import {Tempo} from "./Tempo.tsx";
 import {useTemporizadorAPI, useTemporizadorExecutando, useTemporizadorTempo} from "../../store/useTemporizador.tsx";
 import {Botao} from "../Botao.tsx";
+import {SetTimer} from "./SetTimer.tsx";
 
 export function TemporizadorContent() {
 	useTemporizadorAPI();
 	return (
 		<>
 		<div className="flex flex-col items-center justify-center min-h-screen  bg-black">
-			<div className="bg-[#131315] p-10 w-96 rounded shadow-lg flex flex-col items-center space-y-6 border-1 border-amber-50">
+			<div className="bg-[#131315] p-10 w-full rounded shadow-lg flex flex-col items-center space-y-6 border-1 border-amber-50">
 				<Tempo />
 				<div className="flex w-40 flex-row items-center justify-between">
 				<Botoes />
 				</div>
 			</div>
-			<div className="m-5 bg-[#131315] p-10 w-96 rounded shadow-lg flex flex-col  border-1 border-amber-50">
+			<SetTimer/>
+			<div className="m-5 bg-[#131315] p-10 w-full rounded shadow-lg flex flex-col  border-1 border-amber-50">
 				<h1 className="font-bold text-white p-2">Quick Set</h1>
 				<TemposPreDefinidos/>
 			</div>

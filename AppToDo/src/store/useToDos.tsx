@@ -17,7 +17,7 @@ export function ToDosProvider(props: PropsWithChildren) {
 
     const [toDos, setToDos] = useState<ToDo[]>([]);
 
-    function addToDo(text: string) {
+    async function addToDo(text: string) {
         const toDo: ToDo = {id: uuid(), text, checked: false};
         setToDos([...toDos, toDo]);
     }
