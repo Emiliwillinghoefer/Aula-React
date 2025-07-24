@@ -3,11 +3,9 @@ import {useToDos} from "../store/useToDos.tsx";
 import {DeleteDialog} from "../Components/DeleteDialog.tsx";
 import {NewToDoForm} from "../Components/NewToDoForm.tsx";
 import {ListAllItems} from "../Components/ListItems";
-import {useClearToDos} from "../store/useClearToDos.tsx";
 
 export function Home() {
-    const {toDos, updateToDo} = useToDos();
-    const{clearToDo} = useClearToDos();
+    const {toDos, updateToDo, clearToDo} = useToDos();
 
     const [deleteId, setDeleteId] = useState("");
     const dialogRef = useRef<HTMLDialogElement>(null);
@@ -41,7 +39,6 @@ export function Home() {
     )
 
     //Todo
-    // juntar cleartodos use todos
     // continuar estilizando
     // local storage
     // parametros pela Url, botões de filtragem por estado

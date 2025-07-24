@@ -8,6 +8,7 @@ interface UseToDos {
     addToDo: (text: string) => void;
     updateToDo: (id: string, check: boolean) => void;
     validateInput: (text: string) => boolean;
+    clearToDo: (id: string) => void;
 }
 
 interface Acao<T, C> {
@@ -18,7 +19,8 @@ interface Acao<T, C> {
 type ToDoAcao =
     | Acao<"Add", string>
     | Acao<"Set", ToDo[]>
-    | Acao<"Update", {id: string, check: boolean}>;
+    | Acao<"Update", {id: string, check: boolean}>
+    | Acao<"Delete", string>;
 
 const ToDosContext = createContext<UseToDos | undefined>(undefined);
 
@@ -39,6 +41,12 @@ function toDosReducer(state: ToDo[], action: ToDoAcao) : ToDo[] {
             const newToDos = state.slice();
             newToDos[index].checked = check;
             return newToDos;
+        case "Delete":
+            const idD = action.conteudo;
+            const idDelete = state.findIndex(value => value.id === idD);
+            const deleteToDo = state.slice();
+            deleteToDo.splice(idDelete, 1);
+            return deleteToDo;
         default:
             throw new Error("Ação desconhecida");
     }
@@ -47,6 +55,19 @@ function toDosReducer(state: ToDo[], action: ToDoAcao) : ToDo[] {
 export function ToDosProvider(props: PropsWithChildren) {
 
     const [toDos, dispatch] = useReducer(toDosReducer, []);
+
+    // const [toDos, dispatch] = useReducer(toDosReducer,
+    //     undefined,
+    //     () => {
+    //         const storage = localStorage.getItem("todos")
+    //         if (storage) return JSON.parse(storage);
+    //         else return [];
+    //     });
+    //
+    // useEffect(() => {
+    //     const json = JSON.stringify(toDos);
+    //     localStorage.setItem("todos", json);
+    // }, [toDos]);
 
     function addToDo(text: string) {
         dispatch({tipo: "Add", conteudo: text})
@@ -60,9 +81,12 @@ export function ToDosProvider(props: PropsWithChildren) {
 
     }
 
-
     function updateToDo(id: string, check: boolean) {
         dispatch({tipo: "Update", conteudo: {id, check}});
+    }
+
+    function clearToDo(id: string) {
+        dispatch({tipo: "Delete", conteudo: id});
     }
 
     useEffect(() => {
@@ -74,7 +98,8 @@ export function ToDosProvider(props: PropsWithChildren) {
             toDos,
             addToDo,
             updateToDo,
-            validateInput
+            validateInput,
+            clearToDo
         }
     }>{props.children}</ToDosContext>
 

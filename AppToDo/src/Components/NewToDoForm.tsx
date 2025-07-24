@@ -2,13 +2,11 @@ import {Plus, Trash} from "phosphor-react";
 import {useRef, useState} from "react";
 import {Input} from "./Input.tsx";
 import {useToDos} from "../store/useToDos.tsx";
-import {useClearToDos} from "../store/useClearToDos.tsx";
 
 
 
 export function NewToDoForm() {
     const {addToDo, validateInput} = useToDos();
-    const{clearAllToDos} = useClearToDos();
 
     const [inputInvalido, setInputInvalido] = useState("");
     const textInput = useRef<HTMLInputElement>(null);
@@ -35,7 +33,6 @@ export function NewToDoForm() {
 
     return (
         <form onSubmit={handleSubmit}
-              onReset={clearAllToDos}
         className="mt-8 p-4 bg-[#d8d9c9] flex space-x-2  rounded-xl justify-center"
         >
             <div className="relative  flex-grow">

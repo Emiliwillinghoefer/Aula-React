@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.2.0",
     "@tailwindcss/vite": "^4.1.8",
     "phosphor": "^0.7.1",
     "phosphor-react": "^1.4.1",
