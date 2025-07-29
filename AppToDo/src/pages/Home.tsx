@@ -19,7 +19,8 @@ export function Home() {
     return (
 
             <div className="w-[60%] mx-auto items-center">
-            <h1 className="text-[#efd1b9] text-6xl">App ToDo</h1>
+            <h1 className="text-[#efd1b9] text-5xl pb-5">App ToDo</h1>
+                <p className="text-[#4A5565]">Mantenha-se organizado e faça as coisas</p>
             <NewToDoForm/>
 
             <ListAllItems
@@ -38,10 +39,5 @@ export function Home() {
         </div>
     )
 
-    //Todo
     // continuar estilizando
-    // local storage
-    // parametros pela Url, botões de filtragem por estado
-    // bucar todos local com o .then
-    //dialog
 }

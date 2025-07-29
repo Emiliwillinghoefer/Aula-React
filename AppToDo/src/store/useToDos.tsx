@@ -54,20 +54,20 @@ function toDosReducer(state: ToDo[], action: ToDoAcao) : ToDo[] {
 
 export function ToDosProvider(props: PropsWithChildren) {
 
-    const [toDos, dispatch] = useReducer(toDosReducer, []);
+    //const [toDos, dispatch] = useReducer(toDosReducer, []);
 
-    // const [toDos, dispatch] = useReducer(toDosReducer,
-    //     undefined,
-    //     () => {
-    //         const storage = localStorage.getItem("todos")
-    //         if (storage) return JSON.parse(storage);
-    //         else return [];
-    //     });
-    //
-    // useEffect(() => {
-    //     const json = JSON.stringify(toDos);
-    //     localStorage.setItem("todos", json);
-    // }, [toDos]);
+    const [toDos, dispatch] = useReducer(toDosReducer,
+        undefined,
+        () => {
+            const storage = localStorage.getItem("todos")
+            if (storage) return JSON.parse(storage);
+            else return [];
+        });
+
+    useEffect(() => {
+        const json = JSON.stringify(toDos);
+        localStorage.setItem("todos", json);
+    }, [toDos]);
 
     function addToDo(text: string) {
         dispatch({tipo: "Add", conteudo: text})

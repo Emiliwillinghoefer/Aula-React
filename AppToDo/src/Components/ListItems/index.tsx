@@ -2,6 +2,7 @@ import {ListItem} from "./LisItem";
 import type {ToDo} from "../../Models/ToDo.ts";
 import {SearchInput} from "./SearchInput.tsx";
 import {useSearchParams} from "wouter";
+import {NotePencil} from "phosphor-react";
 
 interface ListAllItemsProps {
     listToDos: ToDo[];
@@ -63,37 +64,62 @@ export function ListAllItems(props:ListAllItemsProps) {
             <div className="flex gap-2 mb-4 mt-4">
                 <BotoesAcimaSearch
                     aoClicar={setTodos}
-                    nom={"Ver Todos"}/>
+                    nom={"Ver Todos"}
+                    ativo={checked === null}
+                />
                 <BotoesAcimaSearch
                     aoClicar={setChecked}
-                    nom={"Finalizados"}/>
+                    nom={"Finalizados"}
+                    ativo={checked === "true"}
+                />
                 <BotoesAcimaSearch
                     aoClicar={setPendentes}
-                    nom={"A fazer"}/>
+                    nom={"A fazer"}
+                    ativo={checked === "false"}
+                />
             </div>
 
-            <SearchInput
-                valor={busca}
-                setValor={setBusca}
-            />
             {
-                filtro.map(value  => {
-                    return <ListItem {...value}
-                                     key={value.id}
-                                     onApagarClick={() => props.deleteItem(value.id)}
-                                     onCheckBoxClick={(check)=> props.updateToDo(value.id, check)}
-                    />
-                })
+                filtro.length === 0 ? (
+                    <div className="bg-[#f8f8f8] border border-gray-300 text-gray-600 p-6 rounded-xl items-center flex flex-col align-middle text-center mt-6">
+                        <NotePencil size={32}  />
+                        <h2 className="p-2"> Nenhum ToDo para mostrar. </h2>
+                    </div>
+                ) :(
+                    <>
+                        <SearchInput
+                            valor={busca}
+                            setValor={setBusca}
+                        />
+                        {
+                            filtro.map(value => (
+                                <ListItem
+                                    {...value}
+                                    key={value.id}
+                                    onApagarClick={() => props.deleteItem(value.id)}
+                                    onCheckBoxClick={(check) => props.updateToDo(value.id, check)}
+                                />
+                            ))
+                        }
+                    </>
+                )
+
             }
 
         </div>
     )
 }
 
-function BotoesAcimaSearch(props:{nom:string, aoClicar: () => void}) {
+function BotoesAcimaSearch(props:{nom:string, aoClicar: () => void, ativo: boolean}) {
 
     return (
-        <button className="bg-[#D8D9C8] rounded-2xl p-2 " onClick={props.aoClicar} >
+        <button onClick={props.aoClicar}
+                className={`rounded-2xl p-2 px-4 transition-colors 
+                  ${props.ativo
+                    ? "bg-[#E0F1F2] text-black"
+                    : "bg-[#D8D9C8] text-black hover:bg-[#c0c2b0]"}`
+                }
+        >
             {props.nom}
         </button>
     )

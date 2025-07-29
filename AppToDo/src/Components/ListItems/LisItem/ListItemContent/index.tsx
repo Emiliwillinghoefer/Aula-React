@@ -23,13 +23,15 @@ function ListItemDeleteButton() {
 
 function ListItemCheckbox() {
 
-    const {onCheckBoxClick} = useListItems();
+    const { checked, onCheckBoxClick} = useListItems();
     return (
         <input onChange={
             event => {
                 onCheckBoxClick(event.target.checked)
             }
-        } type={"checkbox"} />
+
+        } type={"checkbox"}  checked={checked}
+        />
     )
 }
 
