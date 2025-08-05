@@ -1,48 +1,35 @@
-import type {ToDo} from "../Models/ToDo.ts";
+import type { ToDo } from "../Models/ToDo.ts";
 
-const API_BASE = "http://localhost:8080"; // ou o IP do seu Quarkus se não estiver no mesmo PC
+const API_BASE = "https://api-7wrdwlysla-uc.a.run.app/SSPehHl4I24rfpFwyW4I";
 
-function frontToBackend(todo: ToDo): any {
-	return {
-		id: todo.id,
-		description: todo.text,
-		active: !todo.checked,
-	};
+export async function buscarToDos(busca: string): Promise<ToDo[]> {
+    const res = await fetch(
+        API_BASE + (busca ? "?busca=" + encodeURIComponent(busca) : "")
+    );
+    return await res.json();
 }
 
-// function backendToFront(todo: any): ToDo {
-// 	return {
-// 		id: todo.id,
-// 		text: todo.description,
-// 		checked: !todo.active,
-// 	};
-// }
-
-export async function buscarToDos() {
-	const res = await fetch(`${API_BASE}/view`);
-	return await res.json();
-}
-
-export async function adicionarToDo(toDo: ToDo) {
-	return await fetch("http://localhost:8080/todos/add", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(frontToBackend(toDo))
-	});
+export async function adicionarToDo(
+    toDo: Omit<ToDo, "id">
+): Promise<{ id: string }> {
+    const res = await fetch(API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(toDo),
+    });
+    return await res.json();
 }
 
 export async function deletarToDo(id: string) {
-	return await fetch(`${API_BASE}/delete/${id}`, {
-		method: "POST"
-	});
+    return await fetch(`${API_BASE}/${id}`, {
+        method: "DELETE",
+    });
 }
 
-export async function atualizarToDo(toDo: { id: string, texto: string; feito: boolean }) {
-	return await fetch(`${API_BASE}/update`, {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(toDo),
-	});
+export async function atualizarToDo(toDo: Partial<ToDo>) {
+    return await fetch(`${API_BASE}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(toDo),
+    });
 }

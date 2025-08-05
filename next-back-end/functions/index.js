@@ -12,7 +12,12 @@ const app = express();
 
 app.get("/", async (_req, res) => {
   const db = getFirestore();
-  const querySnapshot = await db.collection("todos").get();
+  const busca = _req.query.busca
+  let query = db.collection("todos");
+  if (busca) {
+    query = query.where('text', '>=', busca).where('text', '<=', busca + '\uf8ff');
+  }
+  const querySnapshot = await query.get();
   const docs = querySnapshot.docs.map((value) => ({
     id: value.id,
     ...value.data(),
