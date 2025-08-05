@@ -1,4 +1,6 @@
 import {useEffect, useReducer, useState} from "react";
+import {useTemporizadorAPI} from "../../store/useTemporizador.tsx";
+import {Botao} from "../Botao.tsx";
 
 const CounterLogic = (state: number, action: any) => {
 	switch (action.type) {
@@ -25,7 +27,7 @@ export function SetTimer() {
 	const [inputMinutos, setInputMinutos] = useState("0");
 	const [inputSegundos, setInputSegundos] = useState("0");
 
-
+	const api = useTemporizadorAPI();
 	useEffect(() => {
 		setInputMinutos(minutos.toString());
 	}, [minutos]);
@@ -56,52 +58,84 @@ export function SetTimer() {
 
 	return (
 		<>
-			<div className="mt-5 bg-[#131315] p-10 w-full rounded shadow-lg flex flex-col  border-1 border-amber-50">
-				<h1 className="font-bold text-white p-2">Set Timer</h1>
-				<div className="w-full flex flex-row">
-					<div className="flex flex-col">
+			<div className="mt-5 bg-[#131315] p-5 w-full rounded shadow-lg flex flex-col  border-1 border-[#3F3F46]">
+				<h1 className="font-bold text-white ">Set Timer</h1>
+				<div className="w-full flex flex-row mt-3">
+					<div className="flex flex-col pr-5">
 						<p className="text-white">Minutos</p>
 						<div className="w-full flex flex-row">
 
-							<Botao nome={"+"} aoClicar={() => dispatchMinutos({type: "MAIS"})}></Botao>
+							<BotaoSetTimer nome={"+"} aoClicar={() => dispatchMinutos({type: "MAIS"})}></BotaoSetTimer>
 							<InserirTempo
 								tempo={inputMinutos}
 								handleChange={handleChange}
 								tipo={'m'}
 							/>
-							<Botao
+							<BotaoSetTimer
 								nome={"-"}
 								aoClicar={() => dispatchMinutos({type: "MENOS"})}>
-							</Botao>
+							</BotaoSetTimer>
 							</div>
 					</div>
-					<div className="flex flex-col">
+					<div className="flex flex-col ">
 						<p className="text-white">Segundos</p>
 						<div className="w-full flex flex-row">
 
-							<Botao nome={"+"} aoClicar={() => dispatchSegundos({type: "MAIS"})}></Botao>
+							<BotaoSetTimer nome={"+"} aoClicar={() => dispatchSegundos({type: "MAIS"})}></BotaoSetTimer>
 							<InserirTempo
 								tempo={inputSegundos}
 								handleChange={handleChange}
 								tipo={'s'}
 							/>
-							<Botao
+							<BotaoSetTimer
 								nome={"-"}
 								aoClicar={() => dispatchSegundos({type: "MENOS"})}>
-							</Botao>
+							</BotaoSetTimer>
 						</div>
 					</div>
+
+
+				</div>
+				<div className="mt-5 flex   ">
+					<button className="bg-[#3F3F45]
+					 m-1 text-white p-2 rounded-lg
+					 justify-center w-full align-middle content-center border-2 border-[#3F3F46] "
+							onClick={() => {
+								const min = parseInt(inputMinutos, 10) || 0;
+								const seg = parseInt(inputSegundos, 10) || 0;
+								const total = min * 60 + seg;
+								api.definirTempo(total);
+							}}
+
+					>
+						Set Timer {inputMinutos}:{inputSegundos}
+					</button>
+				</div>
+				<div className="mt-5">
+					<h1 className="font-bold text-white p-2">Quick Set</h1>
+					<TemposPreDefinidos/>
 				</div>
 
 			</div>
 		</>)
 }
 
+function TemposPreDefinidos() {
+	const api = useTemporizadorAPI();
+	return (
+		<div className="flex flex-row justify-between text-white">
+			<Botao estilo={"text-white border-1 border-[#3F3F46] rounded p-2 "} nome={"1 minutos"} aoClicar={()=>api.definirTempo(60)}/>
+			<Botao estilo={"text-white border-1 border-[#3F3F46] rounded p-2 "} nome={"5 minutos"} aoClicar={()=>api.definirTempo(300)}/>
+			<Botao estilo={"text-white border-1 border-[#3F3F46] rounded p-2 "} nome={"10 minutos"} aoClicar={()=>api.definirTempo(600)}/>
+			<Botao estilo={"text-white border-1 border-[#3F3F46] rounded p-2 "} nome={"15 minutos"} aoClicar={()=>api.definirTempo(900)}/>
+		</div>
+	)
+}
 
-function Botao(props: {nome: string, aoClicar: () => void}) {
+function BotaoSetTimer(props: {nome: string, aoClicar: () => void}) {
 	return (
 		<div >
-			<button className="bg-[#131315] m-1 text-white p-3 rounded-full border-1 border-amber-50"
+			<button className="bg-[#131315] m-1 text-white p-3 rounded-lg border-1 border-[#3F3F46]"
 				onClick={props.aoClicar}>
 				{props.nome}
 			</button>
@@ -112,7 +146,7 @@ function Botao(props: {nome: string, aoClicar: () => void}) {
 function InserirTempo(props: {tempo: any, handleChange: (e: any, tipo: string) => void, tipo: string}) {
 	return (
 		<input
-			className="bg-[#131315] text-white p-3 items-center text-center rounded-full border-1 border-amber-50"
+			className="bg-[#131315] text-white p-3 items-center text-center rounded-lg border-1 border-[#3F3F46]"
 			value={props.tempo}
 			onChange={()=> props.handleChange(event, props.tipo)}
 
