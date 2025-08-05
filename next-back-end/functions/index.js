@@ -12,10 +12,15 @@ const app = express();
 
 app.get("/", async (_req, res) => {
   const db = getFirestore();
-  const busca = _req.query.busca
+  const busca = _req.query.busca;
   let query = db.collection("todos");
   if (busca) {
-    query = query.where('text', '>=', busca).where('text', '<=', busca + '\uf8ff');
+    query = query
+      .where("text", ">=", busca)
+      .where("text", "<=", busca + "\uf8ff");
+  }
+  if (_req.query.checked) {
+    query = query.where("checked", "==", _req.query.checked == "true");
   }
   const querySnapshot = await query.get();
   const docs = querySnapshot.docs.map((value) => ({
