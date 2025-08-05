@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "63c71f77-7aca-4cfd-af10-84fafd0913e5",
+		"name": "Aula React",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11035427"
+	},
+	"item": [
+		{
+			"name": "Ler tarefas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-7wrdwlysla-uc.a.run.app",
+					"protocol": "https",
+					"host": [
+						"api-7wrdwlysla-uc",
+						"a",
+						"run",
+						"app"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar tarefa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"checked\": false,\r\n    \"text\": \"Testando aqui\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-7wrdwlysla-uc.a.run.app",
+					"protocol": "https",
+					"host": [
+						"api-7wrdwlysla-uc",
+						"a",
+						"run",
+						"app"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar tarefa",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"checked\": false}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-7wrdwlysla-uc.a.run.app/n5JY8rE8FKCWnsXmdfon",
+					"protocol": "https",
+					"host": [
+						"api-7wrdwlysla-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"n5JY8rE8FKCWnsXmdfon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar tarefa",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api-7wrdwlysla-uc.a.run.app/77GOhOVXZ6xBC1HZbg4w",
+					"protocol": "https",
+					"host": [
+						"api-7wrdwlysla-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"77GOhOVXZ6xBC1HZbg4w"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
