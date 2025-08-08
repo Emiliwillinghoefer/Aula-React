@@ -1,7 +1,7 @@
 import {type RefObject} from "react";
 
 interface DeleteDialogProps {
-    ref: RefObject<HTMLDialogElement>;
+    ref: RefObject<HTMLDialogElement | null> ;
     simClick: () => void;
     naoClick: () => void;
 }
