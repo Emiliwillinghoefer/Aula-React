@@ -1,12 +1,15 @@
+"use server"
 import {ToDo} from "@/models/ToDo";
+import {revalidateTag} from "next/cache";
 
-const API_BASE = "https://api-7wrdwlysla-uc.a.run.app/SSPehHl4I24rfpFwyW4I";
+const API_BASE = "https://api-7wrdwlysla-uc.a.run.app/";
 
 export async function buscarToDos(busca: string): Promise<ToDo[]> {
     const res = await fetch(
-        API_BASE + (busca ? "?busca=" + encodeURIComponent(busca) : "")
+        API_BASE + (busca ? "?busca=" + encodeURIComponent(busca) : ""), {next: {tags: ["todos"]}}
     );
-    return await res.json();
+    const json = await res.json();
+    return  json.map((v: any) => ({...v, isServer: true}));
 }
 
 export async function adicionarToDo(
@@ -26,10 +29,16 @@ export async function deletarToDo(id: string) {
     });
 }
 
-export async function atualizarToDo(toDo: Partial<ToDo>) {
-    return await fetch(`${API_BASE}`, {
+export async function atualizarToDo({id, ...toDo}: Partial<ToDo>) {
+
+    const res = await fetch(`${API_BASE}/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(toDo),
     });
+
+    if (res.ok) {
+        revalidateTag("todos");
+    }
+    return res;
 }

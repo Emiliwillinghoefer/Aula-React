@@ -1,18 +1,15 @@
 import {buscarToDos} from "@/api/toDoApi";
+import {SearchInput} from "@/components/SearchInput";
+import Home from "@/ui/Home";
 
-export default async function Home() {
+export default async function ({
+    searchParams}: {searchParams: Promise<{[key: string]: string | string[] | undefined}>} ) {
 
-  const teste = await buscarToDos("");
+    const search = (await searchParams).query as string;
+    const teste = await buscarToDos(search || "");
+
+    console.log(await searchParams);
   return (
-    <div>
-      {teste.map(value => value.text)}
-
-      <div className="w-[60%] mx-auto items-center">
-        <h1 className="text-[#efd1b9] text-5xl pb-5">App ToDo</h1>
-        <p className="text-[#4A5565]">Mantenha-se organizado e faça as coisas</p>
-
-      </div>
-
-    </div>
+    <Home tarefas={teste} />
   );
 }
